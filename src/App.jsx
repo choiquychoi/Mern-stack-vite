@@ -3,6 +3,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm'
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation'
 import HomeIcon from '@mui/icons-material/Home'
 import { pink } from '@mui/material/colors'
+import Typography from '@mui/material/Typography'
 
 function App() {
 
@@ -10,6 +11,9 @@ function App() {
   return (
     <>
       <div>choiquychoi</div>
+
+      <Typography variant='body2' color='text.secondary'>Test Typography</Typography>
+
       <Button variant="text">Text</Button>
       <Button variant="contained">Contained</Button>
       <Button variant="outlined">Outlined</Button>
@@ -24,7 +28,7 @@ function App() {
       <HomeIcon color="success" />
       <HomeIcon color="action" />
       <HomeIcon color="disabled" />
-      <HomeIcon sx={{ color: pink[100] }} />
+      <HomeIcon sx={{ color: pink[400] }} />
     </>
   )
 }
