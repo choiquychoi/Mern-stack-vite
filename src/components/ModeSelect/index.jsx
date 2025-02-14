@@ -48,4 +48,4 @@ function ModeSelect() {
     )
 }
 
-export default ModeSelect;
+export default ModeSelect
