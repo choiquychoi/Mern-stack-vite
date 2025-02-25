@@ -15,6 +15,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import Tooltip from '@mui/material/Tooltip'
 import HelpIcon from '@mui/icons-material/Help'
 import Profiles from './Menus/profiles'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 
 function AppBar() {
     return (
@@ -39,7 +40,7 @@ function AppBar() {
                 <Recent />
                 <Starred />
                 <Templates />
-                <Button sx={ { color: 'primary.main' }} variant="create">Create</Button>
+                <Button variant='outlined' startIcon={< LibraryAddIcon/>}>Invite</Button>
             </Box>
         </Box>
 
