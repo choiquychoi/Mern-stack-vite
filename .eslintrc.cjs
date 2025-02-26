@@ -32,7 +32,7 @@ module.exports = {
         'object-curly-spacing': [1, 'always'],
         'indent': ['warn', 4],
         'semi': [1, 'never'],
-        'quotes': ['error', 'single'],
+        'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
         'array-bracket-spacing': 1,
         'linebreak-style': 0,
         'no-unexpected-multiline': 'warn',

@@ -1,17 +1,17 @@
-import { Box } from '@mui/material';
+import { Box } from '@mui/material'
 
 function BoardContent() {
     return (
         <Box sx={{
-            backgroundColor: 'primary.main',
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
             width: '100%',
             height: theme => `calc(100vh - ${theme.Trello.BoardBarHeigth} - ${theme.Trello.AppBarHeigth})`,
             display: 'flex',
-            alignItems : 'center',
+            alignItems : 'center'
         }}>
             Board content
         </Box>
-    );
+    )
 }
 
-export default BoardContent;
+export default BoardContent
