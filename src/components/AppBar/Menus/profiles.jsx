@@ -30,8 +30,8 @@ function Profiles() {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar 
-                        sx={{ width: 30, height: 30 }}
+                    <Avatar
+                        sx={{ width: 38, height: 38 }}
                         alt="choiquychoi"
                         src="https://lh3.googleusercontent.com/a/ACg8ocJkLZIUKNAFswPTMkMWwTeJv-zcQqbZ_iXjf0Wb9wXsVJF7PROw=s288-c-no"
                     />
@@ -43,34 +43,34 @@ function Profiles() {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button-profiles'    
+                    'aria-labelledby': 'basic-button-profiles'
                 }}
             >
                 <MenuItem >
-                    <Avatar sx={{width: 28, height: 28, mr: 2 }} /> Profile
+                    <Avatar sx={{ width: 28, height: 28, mr: 2 }} /> Profile
                 </MenuItem>
                 <MenuItem >
-                    <Avatar sx={{width: 28, height: 28, mr: 2 }} /> My account
+                    <Avatar sx={{ width: 28, height: 28, mr: 2 }} /> My account
                 </MenuItem>
                 <Divider />
-                    <MenuItem >
-                        <ListItemIcon>
-                            <PersonAdd fontSize="small" />
-                        </ListItemIcon>
+                <MenuItem >
+                    <ListItemIcon>
+                        <PersonAdd fontSize="small" />
+                    </ListItemIcon>
                         Add another account
-                    </MenuItem>
-                    <MenuItem >
-                        <ListItemIcon>
-                            <Settings fontSize="small" />
-                        </ListItemIcon>
-                        Settings
-                    </MenuItem>
-                    <MenuItem >
+                </MenuItem>
+                <MenuItem >
+                    <ListItemIcon>
+                        <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                </MenuItem>
+                <MenuItem >
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
                     Logout
-                    </MenuItem>
+                </MenuItem>
             </Menu>
         </Box>
     )

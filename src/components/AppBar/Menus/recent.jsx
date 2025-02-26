@@ -23,6 +23,7 @@ function Recent() {
     return (
         <Box>
             <Button
+                sx={{ color: 'white' }}
                 id="basic-button-recent"
                 aria-controls={open ? 'basic-menu-recent' : undefined}
                 aria-haspopup="true"
@@ -38,7 +39,7 @@ function Recent() {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button-recent'    
+                    'aria-labelledby': 'basic-button-recent'
                 }}
             >
                 <MenuItem>
@@ -57,12 +58,12 @@ function Recent() {
                     Custom: 1.2
                 </MenuItem>
                 <Divider />
-                    <MenuItem>
-                        <ListItemText>Add space before paragraph</ListItemText>
-                    </MenuItem>
-                    <MenuItem>
-                        <ListItemText>Add space after paragraph</ListItemText>
-                    </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space before paragraph</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space after paragraph</ListItemText>
+                </MenuItem>
                 <Divider />
                 <MenuItem>
                     <ListItemText>Custom spacing...</ListItemText>

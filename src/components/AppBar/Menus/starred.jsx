@@ -23,6 +23,7 @@ function Starred() {
     return (
         <Box>
             <Button
+                sx={{ color: 'white' }}
                 id="basic-button-starred"
                 aria-controls={open ? 'basic-menu-starred' : undefined}
                 aria-haspopup="true"
@@ -38,7 +39,7 @@ function Starred() {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button-starred'    
+                    'aria-labelledby': 'basic-button-starred'
                 }}
             >
                 <MenuItem>
@@ -57,12 +58,12 @@ function Starred() {
                     Custom: 1.2
                 </MenuItem>
                 <Divider />
-                    <MenuItem>
-                        <ListItemText>Add space before paragraph</ListItemText>
-                    </MenuItem>
-                    <MenuItem>
-                        <ListItemText>Add space after paragraph</ListItemText>
-                    </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space before paragraph</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space after paragraph</ListItemText>
+                </MenuItem>
                 <Divider />
                 <MenuItem>
                     <ListItemText>Custom spacing...</ListItemText>

@@ -23,6 +23,7 @@ function Templates() {
     return (
         <Box>
             <Button
+                sx={{ color: 'white' }}
                 id="basic-button-templates"
                 aria-controls={open ? 'basic-menu-templates' : undefined}
                 aria-haspopup="true"
@@ -38,7 +39,7 @@ function Templates() {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button-templates'    
+                    'aria-labelledby': 'basic-button-templates'
                 }}
             >
                 <MenuItem>
@@ -57,12 +58,12 @@ function Templates() {
                     Custom: 1.2
                 </MenuItem>
                 <Divider />
-                    <MenuItem>
-                        <ListItemText>Add space before paragraph</ListItemText>
-                    </MenuItem>
-                    <MenuItem>
-                        <ListItemText>Add space after paragraph</ListItemText>
-                    </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space before paragraph</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                    <ListItemText>Add space after paragraph</ListItemText>
+                </MenuItem>
                 <Divider />
                 <MenuItem>
                     <ListItemText>Custom spacing...</ListItemText>
