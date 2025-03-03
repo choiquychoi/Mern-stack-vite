@@ -25,7 +25,7 @@ function AppBar() {
     const [searchValue, setSearchValue] = useState('')
     return (
         <Box px={2} sx = {{
-            height: (theme) => theme.Trello.BoardBarHeigth,
+            height: (theme) => theme.Trello.AppBarHeigth,
             width: '100%',
             display: 'flex',
             alignItems: 'center',
