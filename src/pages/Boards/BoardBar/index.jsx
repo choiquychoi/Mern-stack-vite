@@ -28,7 +28,7 @@ const MENU_STYLE = {
 function BoardBar() {
     return (
         <Box sx={{
-            height: (theme) => theme.Trello.AppBarHeigth,
+            height: (theme) => theme.Trello.BoardBarHeigth,
             width: '100%',
             display: 'flex',
             alignItems: 'center',
@@ -91,7 +91,10 @@ function BoardBar() {
                             width: 30,
                             height: 30,
                             fontSize: 16,
-                            border:'none'
+                            border:'none',
+                            color: 'white',
+                            cursor: 'pointer',
+                            '&: first-of-type' : { bgcolor:'#a4b0be' }
                         }
                     }}
                 >
