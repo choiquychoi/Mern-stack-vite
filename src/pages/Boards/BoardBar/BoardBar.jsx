@@ -10,6 +10,8 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import { Tooltip } from '@mui/material'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters'
+
 
 const MENU_STYLE = {
     color: 'white',
@@ -25,7 +27,8 @@ const MENU_STYLE = {
     }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
+
     return (
         <Box sx={{
             height: (theme) => theme.Trello.BoardBarHeigth,
@@ -41,13 +44,13 @@ function BoardBar() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip
                     sx={MENU_STYLE}
-                    icon={<DashboardIcon />} label="Choiquychoi MERN Stack Board"
+                    icon={<DashboardIcon />} label= { board?.title }
                     clickable
                 />
 
                 <Chip
                     sx={MENU_STYLE}
-                    icon={<VpnLockIcon />} label="Public private workspace"
+                    icon={<VpnLockIcon />} label= {capitalizeFirstLetter(board?.type)}
                     clickable
                 />
 
