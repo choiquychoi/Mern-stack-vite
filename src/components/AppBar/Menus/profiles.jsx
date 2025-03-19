@@ -33,7 +33,7 @@ function Profiles() {
                     <Avatar
                         sx={{ width: 38, height: 38 }}
                         alt="choiquychoi"
-                        src="https://lh3.googleusercontent.com/a/ACg8ocJkLZIUKNAFswPTMkMWwTeJv-zcQqbZ_iXjf0Wb9wXsVJF7PROw=s288-c-no"
+                        src="https://a.deviantart.net/avatars-big/r/a/raydouglasfontenele.jpg?4"
                     />
                 </IconButton>
             </Tooltip>
