@@ -276,14 +276,17 @@ function BoardContent( { board } ) {
 
         // tìm các cái điêm giao nhau với con trỏ
         const pointerInterSection = pointerWithin(args)
+        console.log('pointerInterSection:', pointerInterSection)
 
-        // thuật toán phát hiện va chạm sẻ trả về một mảng các điểm giao nhau
-        const interSection = !!pointerInterSection?.length
-            ? pointerInterSection
-            : rectIntersection(args)
+        if (!pointerInterSection ?.length) return
+
+        // thuật toán phát hiện va chạm sẻ trả về một mảng các điểm giao nhau (khi thêm ifif (!pointerInterSection ?.length) return) thì không cần dòng này nữa
+        // const interSection = !!pointerInterSection?.length
+        //     ? pointerInterSection
+        //     : rectIntersection(args)
 
         // tìm overId cái đầu tiên va chạm
-        let overId = getFirstCollision(interSection, 'id')
+        let overId = getFirstCollision(pointerInterSection, 'id')
         if (overId) {
         // Nếu phần tử "over" là một column, ta sẽ xác định cardId gần nhất trong khu vực va chạm.
         // Việc phát hiện va chạm có thể sử dụng thuật toán closestCenter hoặc closestCorners.
@@ -291,7 +294,7 @@ function BoardContent( { board } ) {
             const checkColumn = OrderedColumns.find(column => column._id === overId)
             if (checkColumn) {
                 // console.log('overId before:', overId)
-                overId = closestCenter({
+                overId = closestCorners({
                     ...args,
                     droppableContainers: args.droppableContainers.filter(container => {
                         return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
