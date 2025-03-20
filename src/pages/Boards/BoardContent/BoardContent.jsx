@@ -12,14 +12,15 @@ import {
     DragOverlay,
     defaultDropAnimationSideEffects,
     closestCorners,
-    rectIntersection,
+    // rectIntersection,
     pointerWithin,
-    getFirstCollision,
-    closestCenter
+    getFirstCollision
+    // closestCenter
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useState, useCallback, useRef } from 'react'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+import { generatePlaceholderCard } from '~/utils/formatters'
 
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
@@ -88,10 +89,14 @@ function BoardContent( { board } ) {
             const nextActiveColumn = nextColumns.find(column => column._id === activeColumn._id)
             const nextOverColumn = nextColumns.find(column => column._id === overColumn._id)
 
-            // nextActiveColumn: column cũcũ
+            // nextActiveColumn: column cũ
             if (nextActiveColumn) {
                 // Xóa cảrd ở cái column active cũ (lúc mà kéo card ra khỏi column đó để qua column khác)
                 nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+
+                if (isEmpty(nextActiveColumn.cards)) {
+                    nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+                }
 
                 // cập nhật lại cái mãng cardOrderIds mới sau khi xóa card ở column active cũ
                 nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
@@ -109,6 +114,10 @@ function BoardContent( { board } ) {
                 }
                 // tiếp theo là thêm card vào column đích
                 nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuilt_activeDraggingCardData)
+
+                // xóa cái placeholder card nếu có trong column
+                nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
+
                 // cập nhật lại cái mãng cardOrderIds mới sau khi xóa card ở column active cũ
                 nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
             }
@@ -276,7 +285,7 @@ function BoardContent( { board } ) {
 
         // tìm các cái điêm giao nhau với con trỏ
         const pointerInterSection = pointerWithin(args)
-        console.log('pointerInterSection:', pointerInterSection)
+        // console.log('pointerInterSection:', pointerInterSection)
 
         if (!pointerInterSection ?.length) return
 
