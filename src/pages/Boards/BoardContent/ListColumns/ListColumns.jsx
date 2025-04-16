@@ -1,9 +1,10 @@
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import Box from '@mui/material/Box'
 import Column from './Column/Column'
 import Button from '@mui/material/Button'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-import { useState } from 'react'
 // import { set } from 'lodash'
 import TextField from '@mui/material/TextField'
 // import InputAdornment from '@mui/material/InputAdornment'
@@ -19,7 +20,7 @@ function ListColumns({ columns }) {
 
     const addNewColumn = () => {
         if (!newColumnTitle) {
-            // console.error('please type you column!')
+            toast.error('please type you column!')
             return
         }
 
