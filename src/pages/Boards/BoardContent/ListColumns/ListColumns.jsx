@@ -114,7 +114,7 @@ function ListColumns({ columns }) {
                                     borderColor: (theme) => theme.palette.success.main,
                                     '&:hover': { bgcolor: (theme) => theme.palette.success.main }
                                 }}
-                            >Add Column</Button>
+                            >Add</Button>
                             <CloseIcon
                                 fontSize='small'
                                 sx={{
