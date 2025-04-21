@@ -33,7 +33,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 }
 
 
-function BoardContent( { board, createNewColumn, createNewCard } ) {
+function BoardContent( { board, createNewColumn, createNewCard, moveColumns } ) {
 
     // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
@@ -258,10 +258,13 @@ function BoardContent( { board, createNewColumn, createNewCard } ) {
                 const newColumnIndex = OrderedColumns.findIndex(c => c._id === over.id)
 
                 const dndOrderedColumns = arrayMove(OrderedColumns, oldColumnIndex, newColumnIndex)
-                // const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
-                // console.log('dndOrderedColumns', dndOrderedColumns)
-                // console.log('dndOrderedColumnsIds', dndOrderedColumnsIds)
 
+                /**
+                 * gọi lên props function moveColumns nằm ở component cha cao nhất
+                 */
+                moveColumns(dndOrderedColumns)
+
+                // cập nhật lại state OrderedColumns để không bị flickering hoặc delay giao diện
                 setOrderedColumns(dndOrderedColumns)
             }
         }
