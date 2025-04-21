@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {API_ROOT} from '~/utils/constants'
+import { API_ROOT } from '~/utils/constants'
 
 /**
  * 📌 Lưu ý khi sử dụng Axios trong khóa MERN Stack Pro (TrungQuanDev):
@@ -11,9 +11,21 @@ import {API_ROOT} from '~/utils/constants'
  * - (Trong phần nâng cao của khoá học MERN Stack, mình sẽ hướng dẫn chi tiết cách sử dụng Interceptors để xử lý chuẩn hóa.)
  */
 
-
+/** Boards */
 export const fetchBoardDetailsAPI = async (boardId) => {
     const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`)
     // lưu ý: axios sẻ trả về kết quả về qua properties của nó là data
+    return response.data
+}
+
+/** Columns */
+export const createNewColumnAPI = async (newColumnData) => {
+    const response = await axios.post(`${API_ROOT}/v1/columns`, newColumnData)
+    return response.data
+}
+
+/** Cards */
+export const createNewCardAPI = async (newCardData) => {
+    const response = await axios.post(`${API_ROOT}/v1/cards`, newCardData)
     return response.data
 }
