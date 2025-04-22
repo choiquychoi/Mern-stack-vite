@@ -3,12 +3,15 @@ import Container from '@mui/material/Container'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
+import { mapOrder } from '~/utils/sorts'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
+import { Box, Typography } from '@mui/material'
 
 function Board() {
     const [board, setboard] = useState(null)
@@ -18,10 +21,17 @@ function Board() {
         const boardId = '68022a4d1ee2200940a8d59c'
         // call API
         fetchBoardDetailsAPI(boardId).then((board) => {
+
+            // xắp xếp thứ tự các column luôn ở đây trước khi đưa dữ liễu xuống bên dưới các component con
+            board.columns = mapOrder(board?.columns, board.columnOrderIds, '_id')
+
             board.columns.forEach(column => {
                 if (isEmpty(column.cards)) {
                     column.cards = [generatePlaceholderCard(column)]
                     column.cardOrderIds = [generatePlaceholderCard(column)._id]
+                } else {
+                    // xắp xếp thứ tự các card luôn ở đây trong column trước khi đưa dữ liễu xuống bên dưới các component con
+                    column.cards = mapOrder(column.cards, column.cardOrderIds, '_id')
                 }
             })
             setboard(board)
@@ -69,8 +79,11 @@ function Board() {
         setboard(newBoard)
     }
 
-    // function này có nhiệm vụ gọi API và xữ lý khi kéo thả column xong xuôi
-    const moveColumns =async (dndOrderedColumns) => {
+    /**
+     * function này có nhiệm vụ gọi API và xữ lý khi kéo thả column xong xuôi
+     * chỉ cần gọi API để cập nhật mảng phía columnOrderIds của board chứa nó
+    */
+    const moveColumns = (dndOrderedColumns) => {
         // cập nhâtj lại cho chuẩn
         const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
         const newBoard = { ...board }
@@ -79,7 +92,41 @@ function Board() {
         setboard(newBoard)
 
         // gọi API cập nhật lại thứ tự column
-        await updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
+        updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
+    }
+
+    /**
+     * function này có nhiệm vụ gọi API và xữ lý khi kéo thả card xong xuôi
+     * chỉ cần gọi API để cập nhật mảng phía cardOrderIds của board chứa nó
+    */
+    const moveCardInTheSameColumn = (dndOrderedCards, dndOrderedCardIds, columnId) => {
+        // cập nhâtj lại cho chuẩn
+        const newBoard = { ...board }
+        const columnToUpdate = newBoard.columns.find(column => column._id === columnId)
+        if (columnToUpdate) {
+            columnToUpdate.cards = dndOrderedCards
+            columnToUpdate.cardOrderIds = dndOrderedCardIds
+        }
+        setboard(newBoard)
+
+        // gọi API cập nhật lại thứ tự column
+        updateColumnDetailsAPI(columnId, { cardOrderIds: dndOrderedCardIds })
+    }
+
+    if (!board) {
+        return (
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 2,
+                width: '100nw',
+                height: '100vh'
+            }}>
+                <CircularProgress />
+                <Typography>Loading Board....</Typography>
+            </Box>
+        )
     }
 
     return (
@@ -94,6 +141,7 @@ function Board() {
                 createNewColumn={ createNewColumn }
                 createNewCard={ createNewCard }
                 moveColumns = {moveColumns}
+                moveCardInTheSameColumn= {moveCardInTheSameColumn}
             />
 
         </Container>

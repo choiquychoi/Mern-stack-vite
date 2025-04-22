@@ -18,7 +18,6 @@ import ContentCopy from '@mui/icons-material/ContentCopy'
 import ContentPaste from '@mui/icons-material/ContentPaste'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { TextField } from '@mui/material'
@@ -52,7 +51,7 @@ function Column({ column, createNewCard }) {
         setAnchorEl(null)
     }
 
-    const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+    const orderedCards = column.cards
 
     const [openNewCardForm, setOpenNewCardForm] = useState(false)
     const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
@@ -79,7 +78,7 @@ function Column({ column, createNewCard }) {
          *
          * Việc sử dụng Redux giúp code sạch và dễ quản lý hơn rất nhiều.
          */
-        await createNewCard(newCardData)
+        createNewCard(newCardData)
 
         // đóng trạng thái thêm Card mới và clear Input
         toggleOpenNewCardForm()
