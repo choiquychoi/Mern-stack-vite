@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 // import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI, updateColumnDetailsAPI, moveCardToDifferentColumnAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 import { Box, Typography } from '@mui/material'
@@ -73,9 +73,16 @@ function Board() {
         const newBoard = { ...board }
         const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
         if (columnToUpdate) {
-            columnToUpdate.cards.push(createdCard)
-            columnToUpdate.cardOrderIds.push(createdCard._id)
+
+            if (columnToUpdate.cards.some(card => card.FE_PlaceholderCard)) {
+                columnToUpdate.cards = [createdCard]
+                columnToUpdate.cardOrderIds = [createdCard._id]
+            } else {
+                columnToUpdate.cards.push(createdCard)
+                columnToUpdate.cardOrderIds.push(createdCard._id)
+            }
         }
+        console.log('🚀 ~ createNewCard ~ columnToUpdate:', columnToUpdate)
         setboard(newBoard)
     }
 
@@ -129,6 +136,36 @@ function Board() {
         )
     }
 
+    /**
+     * khi di chuyển card sang column khác
+     * B1: cập nhất mảng cardOrderIds của column ban đầu chứa nó (nghĩa là Xóa cái _id của card đó ra khỏi mảng)
+     * B2: cập nhất mảng cardOrderIds của column tiếp theo (nghĩa là thêm _id của card vào mảng)
+     * B3: cập nhật lại trường columnId mới của cái card đã kéo
+     * => làm 1 API support riêng cho việc này
+     */
+    const moveCardToDifferentColumn = (currentCardId, prevColumnId, nextColumnId, dndOrderedColumns ) => {
+
+        // cập nhâtj lại cho chuẩn
+        const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
+        const newBoard = { ...board }
+        newBoard.columns = dndOrderedColumns
+        newBoard.columnOrderIds = dndOrderedColumnsIds
+        setboard(newBoard)
+
+        let prevCardOrderIds = dndOrderedColumns.find(c => c._id === prevColumnId)?.cardOrderIds
+        // xữ lý vấn đề khi kéo phần tử card cuối cùng ra khỏi column, column rổng sẻ có placeholder-card sẻ bị xóa đi và thay thế bằng mảng rổng
+        if (prevCardOrderIds[0].includes('placeholder-card')) prevCardOrderIds = []
+
+        // gọi API xữ lý phái BE
+        moveCardToDifferentColumnAPI({
+            currentCardId,
+            prevColumnId,
+            prevCardOrderIds,
+            nextColumnId,
+            nextCardOrderIds: dndOrderedColumns.find(c => c._id === nextColumnId)?.cardOrderIds
+        })
+    }
+
     return (
         <Container disableGutters maxWidth={false} sx ={ { height: '100vh' } }>
 
@@ -142,6 +179,7 @@ function Board() {
                 createNewCard={ createNewCard }
                 moveColumns = {moveColumns}
                 moveCardInTheSameColumn= {moveCardInTheSameColumn}
+                moveCardToDifferentColumn = {moveCardToDifferentColumn}
             />
 
         </Container>
