@@ -32,7 +32,12 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 }
 
 
-function BoardContent( { board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn } ) {
+function BoardContent( { board,
+    createNewColumn,
+    createNewCard,
+    moveColumns,
+    moveCardInTheSameColumn,
+    moveCardToDifferentColumn } ) {
 
     // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
@@ -64,7 +69,7 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
         return OrderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
     }
 
-    // function chung xử lý việc cập nhật lại state trong trường hợp di chuyển card trong các columns khác nhau
+    //khởi tạo function chung xử lý việc cập nhật lại state trong trường hợp di chuyển card trong các columns khác nhau
     const moveCardBetweenDifferentColumns = (
         overColumn,
         overCardId,
@@ -72,7 +77,8 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
         activeDraggingCardId,
         activeDraggingCardData,
         active,
-        over
+        over,
+        triggerFrom
     ) => {
         setOrderedColumns (prevColumns => {
             // tìm vị trí Index của OverCard trong column đích (nơi mà active card sắp thả vào)
@@ -121,6 +127,16 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
 
                 // cập nhật lại cái mãng cardOrderIds mới sau khi xóa card ở column active cũ
                 nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
+            }
+
+            // nếu function nay được gọi từ handleDragEnd nghĩa là đã kéo thả xong, lúc này mới xử lý API 1 lần ở đây
+            if (triggerFrom === 'handleDragEnd') {
+                moveCardToDifferentColumn(
+                    activeDraggingCardId,
+                    oldColumnWhenDraggingCard._id,
+                    nextOverColumn._id,
+                    nextColumns
+                )
             }
 
             return nextColumns
@@ -178,13 +194,14 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
                 activeDraggingCardId,
                 activeDraggingCardData,
                 active,
-                over
+                over,
+                'handleDragOver'
             )
         }
     }
 
     // Trigger khi kết thúc hành động kéo thả một phần tử => hành động thả (drop)
-    const HandleDragEnd = (event) => {
+    const handleDragEnd = (event) => {
         // console.log('handleDragEnd', event)
 
         const { active, over } = event
@@ -217,7 +234,8 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
                     activeDraggingCardId,
                     activeDraggingCardData,
                     active,
-                    over
+                    over,
+                    'handleDragEnd'
                 )
             } else {
                 // hành động kéo thả card trong cùng 1 column
@@ -345,7 +363,7 @@ function BoardContent( { board, createNewColumn, createNewCard, moveColumns, mov
 
             onDragStart = {handleDragStart}
             onDragOver={handleDragOver}
-            onDragEnd={ HandleDragEnd }
+            onDragEnd={ handleDragEnd }
         >
             <Box sx={{
                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
