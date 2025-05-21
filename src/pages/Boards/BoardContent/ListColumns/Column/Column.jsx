@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Box from '@mui/material/Box'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -23,9 +24,10 @@ import { CSS } from '@dnd-kit/utilities'
 import { TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useConfirm } from 'material-ui-confirm'
+import { API_ROOT } from '~/utils/constants'
 
 
-function Column({ column, createNewCard, deleteColumnDetails }) {
+function Column({ column, createNewCard, deleteColumnDetails, updateColumnCards, updateCardOrderInColumnAPI }) {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: column._id,
         data: { ...column }
@@ -51,6 +53,33 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
+    const handleSortByAI = async () => {
+        try {
+            const res = await fetch(`${API_ROOT}/v1/ai/sort-tasks`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cards: column.cards })
+            })
+
+            if (!res.ok) throw new Error('Sort API failed')
+
+            const { sortedCards } = await res.json()
+
+            updateColumnCards(column._id, sortedCards)
+
+            await updateCardOrderInColumnAPI(
+                column._id,
+                sortedCards.map(card => card._id)
+            )
+
+            toast.success('Sorted successfully!')
+        } catch (err) {
+            console.error(err)
+            toast.error('Sort failed!')
+        }
+    }
+
 
     const orderedCards = column.cards
 
@@ -158,11 +187,25 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
                         >
                             <MenuItem
                                 onClick={toggleOpenNewCardForm}
-                                sx={{ '&:hover': { color: 'success.light', '& .add-card-icon': { color: 'success.light' } } }} 
+                                sx={{ '&:hover': { color: 'success.light', '& .add-card-icon': { color: 'success.light' } } }}
                             >
                                 <ListItemIcon><AddCardIcon className='add-card-icon' fontSize="small" /></ListItemIcon>
                                 <ListItemText>Add new card</ListItemText>
                             </MenuItem>
+
+                            <MenuItem
+                                onClick={handleSortByAI}
+                                sx={{
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                        '& .sort-icon': { color: 'primary.main' }
+                                    }
+                                }}
+                            >
+                                <ListItemIcon><Cloud className="sort-icon" fontSize="small" /></ListItemIcon>
+                                <ListItemText>Sort cards by AI</ListItemText>
+                            </MenuItem>
+
 
                             <MenuItem>
                                 <ListItemIcon><ContentCut fontSize="small" /></ListItemIcon>
