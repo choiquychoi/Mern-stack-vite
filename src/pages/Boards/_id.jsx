@@ -15,7 +15,8 @@ import { fetchBoardDetailsAPI,
     updateBoardDetailsAPI,
     updateColumnDetailsAPI,
     moveCardToDifferentColumnAPI,
-    deleteColumnDetailAPI
+    deleteColumnDetailAPI,
+    updateCardOrderInColumnAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
@@ -128,6 +129,22 @@ function Board() {
         updateColumnDetailsAPI(columnId, { cardOrderIds: dndOrderedCardIds })
     }
 
+    const updateColumnCards = (columnId, newCards) => {
+        setboard(prev => {
+            const newColumns = prev.columns.map(col =>
+                col._id === columnId
+                    ? {
+                        ...col,
+                        cards: newCards,
+                        cardOrderIds: newCards.map(card => card._id) // <- update luôn order
+                    }
+                    : col
+            )
+            return { ...prev, columns: newColumns }
+        })
+    }
+
+
     /**
      * khi di chuyển card sang column khác
      * B1: cập nhất mảng cardOrderIds của column ban đầu chứa nó (nghĩa là Xóa cái _id của card đó ra khỏi mảng)
@@ -204,6 +221,8 @@ function Board() {
                 moveCardInTheSameColumn= {moveCardInTheSameColumn}
                 moveCardToDifferentColumn = {moveCardToDifferentColumn}
                 deleteColumnDetails= {deleteColumnDetails}
+                updateColumnCards = {updateColumnCards}
+                updateCardOrderInColumnAPI = {updateCardOrderInColumnAPI}
             />
 
         </Container>
