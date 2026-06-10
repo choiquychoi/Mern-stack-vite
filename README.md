@@ -56,7 +56,7 @@ src/
 git clone [your-repo-url]
 
 # Install dependencies
-npm install
+yarn install
 
 # Configure environment variables
 # Create a .env file and add your backend API root:
@@ -66,7 +66,7 @@ npm install
 ### 3. Run the App
 ```bash
 # Development mode
-npm run dev
+yarn dev
 ```
 
 ---
