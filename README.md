@@ -1,87 +1,83 @@
-### Bộ code base để bắt đầu học khóa Full Stack MERN Pro (HỌC PHẦN FRONT-END: REACTJS - MATERIAL UI - REDUX...vv) - Lập Trình qua dự án thực tế Trello Clone trên kênh YouTube TrungQuanDev của mình nhé các bạn!
-### Base project for my Full Stack MERN Pro Course - Build Trello App on YouTube!
+# Trello Frontend - Modern DnD & AI Integration
 
-- Playlist khóa Pro: https://www.youtube.com/playlist?list=PLP6tw4Zpj-RJP2-YrhtkWqObMQ-AA4TDy
-
-- Playlist khóa Advanced: https://youtube.com/playlist?list=PLP6tw4Zpj-RJbPQfTZ0eCAXH_mHQiuf2G&si=zmt9y6TYo-e3sIwv
-
-### Hướng dẫn clone Repo code này về máy các bạn chuẩn nhất ở video này:
-
-- Semantic Versioning là gì? Lưu ý Quan Trọng về bộ Code Base của dự án. Link: https://youtu.be/lUfsTj45Uys
+The client-side application for a professional Trello clone, built with React, Vite, and Material UI. It features a seamless **Drag & Drop** experience and integrates with an **AI-powered sorting** backend.
 
 ---
 
-### 🎁 DOWNLOAD FULL SOURCE CODE của toàn bộ dự án (Pro & Advanced) cũng như Donate ủng hộ mình ly cafe nếu bạn muốn 🤝
+## 🚀 Key Features
 
-👉 Đầu tiên cần phải làm rõ một điều: Mình KHÔNG BÁN CODE cũng như KHÔNG BÁN KHÓA HỌC gì ở đây hết. Bởi vì mình đã cung cấp đầy đủ mọi tài nguyên cần thiết cho trường hợp bạn muốn học FREE Miễn Phí từ đầu rồi.
-
-👉 ĐIỀU QUAN TRỌNG TIẾP THEO: Bạn cần phải hiểu rõ về lý do tại sao mình lại chia ra 3 gói Donate cũng như sự khác nhau giữa 3 gói này là gì. Mọi thông tin mình đều đã công khai ở bài viết trên blog chính chủ từ mình nhé, bởi vì nội dung khá dài. Bạn nên dành thời gian đọc nó trước khi bắt đầu khóa học cực kỳ chất lượng này.
-
-👉 Link bài viết: 👇
-
-🌐 https://trungquandev.com/khoa-hoc-lap-trinh-full-stack-mern-100-du-an-thuc-te-chat-luong/
-
-**🥉 FREE PACK (No Sponsor)**
-
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/8e56e2c5d0
-
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/318762
-
-**🥈 GOLD PACK (Gold Sponsor)**
-
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/e41c325ca4
-
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/191152
-
-**🥇 DIAMOND PACK (Diamond Sponsor - VIP)**
-
-• 🌟 Download on Ko-fi: https://ko-fi.com/s/27670843df
-
-• 🌟 Download on Buy Me a Coffee: https://buymeacoffee.com/codetq/e/318750
-
-**🏆 HOẶC NẾU BẠN KHÔNG CÓ THẺ VISA THANH TOÁN QUỐC TẾ THÌ CÓ THỂ LIÊN HỆ TRỰC TIẾP VỚI MÌNH TẠI ĐÂY ĐỂ LẤY TÀI NGUYÊN HỌC TẬP NHÉ 👇**
-
-**🌐 Facebook TrungQuanDev: 👉 https://facebook.com/trungquandev**
-
-**👑 Lưu ý: Video hướng dẫn chi tiết cách Install Source Code (Pro & Advanced) đều đã có trong 2 Playlists của khóa học rồi nhé.**
+- **Advanced Drag & Drop:** Fluid movement of cards and columns using the high-performance **@dnd-kit** library.
+- **AI Sorting Trigger:** Dedicated UI action to sort tasks within a column using Google Gemini AI.
+- **Responsive Design:** Polished UI built with **Material UI (MUI)**, supporting both Dark and Light modes.
+- **Optimistic UI:** Immediate visual feedback on drag-and-drop actions for a smooth user experience.
+- **Real-time Sync:** Efficiently communicates with the backend to persist board states.
+- **Customizable Components:** Modularized structure for Boards, Columns, and Cards.
 
 ---
 
-### Requirements - Thông tin của bộ Code Base này - Chuẩn các phiên bản dưới đây để bắt đầu học: (Semantic Versioning)
+## 🛠 Tech Stack
 
+- **Framework:** React.js (Vite)
+- **UI Library:** Material UI (MUI)
+- **Drag & Drop:** @dnd-kit
+- **State Management:** React Hooks
+- **API Client:** Axios
+- **Icons:** MUI Icons
+- **Notifications:** React-Toastify
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── apis/           # API call definitions using Axios
+├── components/     # Reusable UI components (AppBar, Menus, etc.)
+├── pages/          # Main views (Board Details Page)
+│   └── Boards/
+│       ├── BoardBar/
+│       └── BoardContent/   # Core DnD and AI sorting logic
+├── theme.js        # MUI Custom Theme (Colors, Typography, etc.)
+├── utils/          # Formatter, Sort, and Constant helpers
+└── App.jsx         # Root component
 ```
-* nodejs >= 18.16.0
-* npm = v9.5.1
-* yarn = v1.22.19
 
-* "react": "^18.2.0"
-* "react-dom": "^18.2.0"
-* "@types/react": "^18.0.28"
-* "@types/react-dom": "^18.0.11"
+---
 
-* "vite": "^4.3.2"
-* "@vitejs/plugin-react-swc": "^3.0.0"
+## ⚙️ Installation & Setup
 
-* "eslint": "^8.38.0"
-* "eslint-plugin-react": "^7.32.2"
-* "eslint-plugin-react-hooks": "^4.6.0"
-* "eslint-plugin-react-refresh": "^0.3.4"
+### 1. Prerequisites
+- **Node.js** (v18.x or higher)
+- **Backend Running:** Ensure the [Trello Backend] is active.
+
+### 2. Steps
+```bash
+# Clone the repository
+git clone [your-repo-url]
+
+# Install dependencies
+npm install
+
+# Configure environment variables
+# Create a .env file and add your backend API root:
+# VITE_APP_API_ROOT=http://localhost:8017
 ```
 
-### About Me - Thông tin về mình:
+### 3. Run the App
+```bash
+# Development mode
+npm run dev
+```
 
-Author: **Trungquandev - Một Lập Trình Viên** && **CodeTQ - ASMR Programming**
+---
 
-Blog: https://trungquandev.com/
+## 🌟 Personal Contributions
 
-CV: https://cv.trungquandev.com/
+- **AI UI Integration:** Implemented the "Sort by AI" button and integrated it with the backend AI service, including loading states and toast notifications.
+- **DnD Optimization:** Configured `@dnd-kit` sensors (Mouse, Touch, Pointer) for a better cross-platform drag-and-drop experience.
+- **State Management Logic:** Developed the logic to update the local board state after AI sorting and complex movements.
 
-YouTube 01 (Trungquandev - Một Lập Trình Viên): https://www.youtube.com/@trungquandev
+---
 
-YouTube 02 (CodeTQ - ASMR Programming): https://www.youtube.com/@code-tq
-
-"Learning new everyday not the copycat of yesterday!"
-
-"A bit of fragrance clings to the hand that gives flowers!"
-
-Thanks for watching!
+## 📝 License
+Base project inspired by TrungQuanDev. Enhanced by [Your Name].
